@@ -48,7 +48,8 @@ const CartItem = (props) => {
     <div>
     <ul className={classes.cart}>{mapItemsCart}</ul>
     <div className={classes.total}>
-      <span>Total: ${calculateTotal().toFixed(2)}</span>
+      {calculateTotal() !==0 && <span>Total: ${calculateTotal().toFixed(2)}</span>}
+      
     </div>
   </div>
   );

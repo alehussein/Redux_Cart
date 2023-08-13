@@ -3,6 +3,7 @@ import classes from './ProductItem.module.css';
 import products from '../../Data/products';
 import {useDispatch} from 'react-redux'
 import { additem } from '../store/addToCart';
+import { useEffect } from 'react';
 
 const ProductItem = (props) => {
   // const { title, price, description } = props;
@@ -11,6 +12,8 @@ const ProductItem = (props) => {
   const addItemHandler = (product) => {
     dispatch(additem(product))
   }
+
+  useEffect(()=>{},[])
 
   const mapProtucts = products.map((product) => {
     return(
