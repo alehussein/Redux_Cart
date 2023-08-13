@@ -4,9 +4,9 @@ import Products from './components/Shop/Products';
 
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react';
-import { toggleActions } from './components/store/toggleCart';
 import { Fragment } from 'react';
 import Notification from './components/UI/Notifications';
+import { sendCartData } from './components/store/addToCart';
 
 let isInitial = true;
 
@@ -18,40 +18,11 @@ function App() {
 
 
   useEffect(() => {
-    const sendCartData = async () => {
-      dispatch(toggleActions.showNotification({
-        stattus: 'pending',
-        title: 'Sending',
-        message: 'Sending cart data!'
-      }))
-      const response = await fetch('https://react-http-7cf50-default-rtdb.firebaseio.com/cart.json', {
-        method: 'PUT',
-        body: JSON.stringify(products),
-      })
-      if (!response.ok) {
-        throw new Error('Sending cart data failed.')
-      }
-
-      dispatch(toggleActions.showNotification({
-        stattus: 'succes',
-        title: 'Succes',
-        message: 'Sending cart data successfully'
-      }))
-    };
-
-    if(isInitial){
-      isInitial = false
-      return;
+    if (isInitial) {
+      isInitial = false;
+      return
     }
-
-    sendCartData().catch(error => {
-      dispatch(toggleActions.showNotification({
-        stattus: 'error',
-        title: 'Error',
-        message: 'Sending cart data Failed'
-      }))
-    });
-
+    dispatch(sendCartData(products))
   }, [products, dispatch])
 
 
@@ -59,15 +30,15 @@ function App() {
   return (
     <Fragment>
       {notification && (
-      <Notification 
-      status={notification.status} 
-      title={notification.title} 
-      message={notification.message}
-      />)}
-    <Layout >
-      {!toggle && <Cart />}
-      <Products />
-    </Layout>
+        <Notification
+          status={notification.status}
+          title={notification.title}
+          message={notification.message}
+        />)}
+      <Layout >
+        {!toggle && <Cart />}
+        <Products />
+      </Layout>
     </Fragment>
 
   );
