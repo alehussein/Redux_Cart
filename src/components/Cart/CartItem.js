@@ -16,6 +16,9 @@ const CartItem = (props) => {
   }
 
   const calculateTotal = () => {
+    if(!cartItems){
+      return 0;
+    }
     return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     
   };
