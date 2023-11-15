@@ -11,6 +11,9 @@ const CartButton = (props) => {
   }
 
   const totalItems = () => {
+    if(!cartItems){
+      return 0;
+    }
     return cartItems.reduce((total, item) => total + item.quantity, 0)
   }
 
